@@ -10,3 +10,7 @@
 
 # tester
 test*
+
+# minitalk
+server
+client

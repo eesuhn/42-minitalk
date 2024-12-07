@@ -17,8 +17,7 @@
 
 static void	action(int sig)
 {
-	if (sig == SIGUSR2)
-		exit(0);
+	(void)sig;
 }
 
 static void	send_char(int pid, char *str)
@@ -39,12 +38,6 @@ static void	send_char(int pid, char *str)
 			usleep(100);
 		}
 	}
-	bit = 8;
-	while (bit--)
-	{
-		kill(pid, SIGUSR1);
-		usleep(100);
-	}
 }
 
 int	main(int argc, char **argv)
@@ -54,7 +47,5 @@ int	main(int argc, char **argv)
 	signal(SIGUSR1, action);
 	signal(SIGUSR2, action);
 	send_char(ft_atoi(argv[1]), argv[2]);
-	while (1)
-		pause();
 	return (0);
 }

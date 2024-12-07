@@ -24,9 +24,7 @@ static void	action(int sig, siginfo_t *t_i, void *ctx)
 	if (!client_pid)
 		client_pid = t_i->si_pid;
 	c |= (sig == SIGUSR2);
-	if (++bit < 8)
-		c <<= 1;
-	else
+	if (++bit == 8)
 	{
 		bit = 0;
 		if (!c)
@@ -39,6 +37,8 @@ static void	action(int sig, siginfo_t *t_i, void *ctx)
 		c = 0;
 		kill(client_pid, SIGUSR1);
 	}
+	else
+		c <<= 1;
 }
 
 int	main(void)

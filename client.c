@@ -20,24 +20,29 @@ static void	action(int sig)
 	(void)sig;
 }
 
-static void	send_char(int pid, char *str)
+static void	send_bit(int pid, char c)
 {
 	int		bit;
-	char	c;
 
-	while (*str)
+	bit = 8;
+	while (bit--)
 	{
-		bit = 8;
-		c = *str++;
-		while (bit--)
-		{
-			if (c >> bit & 1)
-				kill(pid, SIGUSR2);
-			else
-				kill(pid, SIGUSR1);
-			usleep(100);
-		}
+		if (c >> bit & 1)
+			kill(pid, SIGUSR2);
+		else
+			kill(pid, SIGUSR1);
+		usleep(100);
 	}
+}
+
+static void	send_char(int pid, char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		send_bit(pid, str[i]);
+	send_bit(pid, '\0');
 }
 
 int	main(int argc, char **argv)

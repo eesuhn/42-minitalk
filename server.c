@@ -16,26 +16,22 @@
 
 static void	action(int sig, siginfo_t *t_i, void *ctx)
 {
-	static pid_t			client_pid = 0;
-	static int				bit = 0;
-	static unsigned char	c = 0;
+	static int				bit;
+	static unsigned char	c;
 
 	(void)ctx;
-	if (!client_pid)
-		client_pid = t_i->si_pid;
 	c |= (sig == SIGUSR2);
-	if (++bit == 8)
+	bit++;
+	if (bit == 8)
 	{
 		bit = 0;
 		if (!c)
 		{
-			kill(client_pid, SIGUSR2);
-			client_pid = 0;
-			return ;
+			kill(t_i->si_pid, SIGUSR2);
+			ft_putchar_fd('\n', 1);
 		}
 		ft_putchar_fd(c, 1);
 		c = 0;
-		kill(client_pid, SIGUSR1);
 	}
 	else
 		c <<= 1;

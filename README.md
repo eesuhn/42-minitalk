@@ -5,7 +5,7 @@
 [Click here for subject file](./docs/en.subject.pdf) <br>
 Handling signals between two processes using UNIX signals.
 
-<img src="./docs/screenshot.png" alt="screenshot" width="630" />
+<img src="./docs/screenshot.png" alt="screenshot" width="800" />
 
 #### Setting up
 

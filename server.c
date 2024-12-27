@@ -41,8 +41,7 @@ int	main(void)
 {
 	struct sigaction	s_sa;
 
-	ft_putnbr_fd(getpid(), 1);
-	ft_putchar_fd('\n', 1);
+	ft_printf("Server PID: %d\n", getpid());
 	s_sa.sa_sigaction = action;
 	s_sa.sa_flags = SA_SIGINFO;
 	sigaction(SIGUSR1, &s_sa, 0);

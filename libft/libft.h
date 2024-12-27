@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <stdarg.h>  // ft_printf
 
 typedef struct s_list
 {
@@ -65,5 +66,30 @@ void	ft_lstdelone(t_list *lst, void (*del)(void *));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+
+// get_next_line
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char	*get_next_line(int fd);
+char	*read_line(int fd, char *line);
+char	*join_line(char *line, char *buf);
+char	*get_res(char *line);
+char	*next_line(char *line);
+int		check_end_index(char *str);
+
+// ft_printf
+int		ft_printf(const char *str, ...);
+int		ft_switch(char c, va_list args);
+int		ft_putchar(char c);
+int		ft_print_char(va_list args);
+int		ft_putstr(char *str);
+int		ft_print_str(va_list args);
+char	*ft_itoa_base(unsigned long long n, char *base);
+int		ft_print_ptr(va_list args);
+int		ft_print_dec_int(va_list args);
+int		ft_print_u_int(va_list args);
+int		ft_print_hex(va_list args, char c);
 
 #endif

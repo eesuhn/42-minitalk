@@ -1,6 +1,8 @@
-TARGETS := server client
+TARGETS = server client
 
-SRCS := \
+MAKE = make --no-print-directory
+
+SRCS = \
 		server \
 		client \
 
@@ -8,30 +10,32 @@ SRCS := $(SRCS:=.c)
 
 OBJS := $(SRCS:.c=.o)
 
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
-LDFLAGS := -Llibft -lft
+LDFLAGS = -Llibft -lft
 
-LIBFT := ./libft/libft.a
+LIBFT = ./libft/libft.a
 
 all: $(TARGETS)
 
-$(TARGETS): %: %.o $(LIBFT)
+$(TARGETS): %: %.o $(LIBFT) $(OBJS)
 	cc $(CFLAGS) -o $@ $< $(LDFLAGS)
 
 $(LIBFT):
-	@$(MAKE) -C ./libft > /dev/null
+	@echo "Compiling libft..."
+	@$(MAKE) -C ./libft
 
 %.o: %.c
-	cc $(CFLAGS) -c $< -o $@
+	@cc $(CFLAGS) -c $< -o $@
 
 clean:
-	@$(MAKE) clean -C ./libft > /dev/null
-	rm -f $(OBJS)
+	@echo "\033[0;33mCleaning...\033[0m"
+	@$(MAKE) clean -C ./libft
+	@rm -f $(OBJS)
 
 fclean: clean
-	@$(MAKE) fclean -C ./libft > /dev/null
-	rm -f $(TARGETS)
+	@$(MAKE) fclean -C ./libft
+	@rm -f $(TARGETS)
 
 re: fclean all
 

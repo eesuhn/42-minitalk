@@ -1,6 +1,11 @@
-NAME := libft.a
+NAME = libft.a
 
-SRCS := \
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g
+
+SRCDIR = srcs/
+OBJDIR = objs/
+SRC_FILES = \
 		ft_isalpha \
  		ft_isdigit \
  		ft_isalnum \
@@ -43,24 +48,37 @@ SRCS := \
 		ft_lstdelone \
 		ft_lstclear \
 		ft_lstiter \
-		ft_lstmap
+		ft_lstmap \
+		get_next_line_utils \
+		get_next_line \
+		ft_printf \
+		ft_switch \
+		ft_putchar \
+		ft_print_char \
+		ft_putstr \
+		ft_print_str \
+		ft_itoa_base \
+		ft_print_ptr \
+		ft_print_dec_int \
+		ft_print_u_int \
+		ft_print_hex \
 
-SRCS := $(addprefix srcs/, $(addsuffix .c, $(SRCS)))
-
-OBJS := $(addprefix objs/, $(notdir $(SRCS:.c=.o)))
-
-CFLAGS := -Wall -Wextra -Werror
+SRCS = $(addprefix $(SRCDIR), $(SRC_FILES:=.c))
+OBJS = $(addprefix $(OBJDIR), $(notdir $(SRCS:.c=.o)))
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
 
-objs/%.o: srcs/%.c
-	@cc $(CFLAGS) -c $< -o $@
+$(OBJDIR)%.o: $(SRCDIR)%.c | $(OBJDIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR):
+	@mkdir -p $(OBJDIR)
 
 clean:
-	@rm -f $(OBJS)
+	@rm -rf $(OBJDIR)
 
 fclean: clean
 	@rm -f $(NAME)
